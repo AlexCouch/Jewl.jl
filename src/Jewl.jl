@@ -1,5 +1,6 @@
 module Jewl
 
-# Write your package code here.
+include("frame.jl")
+include("performance.jl")
 
 end
