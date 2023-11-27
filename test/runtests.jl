@@ -1,6 +1,6 @@
-using Jewl
+import Jewl
 using Test
 
-@testset "Jewl.jl" begin
-    # Write your tests here.
+@testset "Load" begin
+    bubble_sort = Jewl.Load("../data/dump.json")
 end
