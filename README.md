@@ -10,13 +10,28 @@ In your julia prompt, install this git repo
 (@v1.9) pkg> add https://github.com/AlexCouch/Jewl.jl.git 
 ```
 Then, in your project, after producing the `dump.json` file, run the following code:
-```julia
-data_name = Jewl.Load("dump.json")
-perfdata = Jewl.Performance(data_name)
-labels, data = Jewl.RelativePerformance(perfdata)
-ShowPieChart(labels, data, "[Program Name] Relative Performance")
+```julia-repl
+julia> data_name = Jewl.Load("dump.json")
+julia> perfdata = Jewl.Performance(data_name)
+julia> labels, data = Jewl.RelativePerformance(perfdata)
+julia> ShowPieChart(data, labels, "[Program Name] Relative Performance")
 ```
-This code will show a piechart.
+This produces the following pie chart 
+![Pie Chart Example](PieChart.png)
+
+```julia-repl
+julia> data = Jewl.Load("data/bubble_sort.json")
+julia> samples = Jewl.Sample(data, "outer_loop", "inner_loop", "j")
+julia> using PyPlot
+julia> ioff()
+julia> title("Bubble Sort Boxplot Test")
+julia> xlabel("Samples")
+julia> ylabel("j")
+julia> boxplot(samples)
+julia> show()
+```
+This code produces the following box plot
+![Box Plot Example](Figure_1.png)
 
 For generating frames and a dump.json file, see [jewl-go](https://github.com/AlexCouch/jewl-go)
 
