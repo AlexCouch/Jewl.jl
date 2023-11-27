@@ -12,6 +12,9 @@ struct Frame
     subframes::Array{Frame}
 end
 
+"""
+Recursively walk through the frame tree and apply the given function `f` to each frame encountered
+"""
 function walk(f, frame)
     f(frame)
     _ = walk.(f, frame.subframes)
