@@ -3,7 +3,6 @@ import Flatten
 using PyPlot
 using DataStructures
 
-
 function FlattenFrame(data::Frame)
     arr = Array{Tuple}(undef, 0)
     use = Union{String, Float64}
