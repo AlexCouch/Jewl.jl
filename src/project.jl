@@ -12,21 +12,18 @@ function Load(path::String)::Project
 end
 
 function GetFrame(proj::Project, name::String)::Union{Frame, Nothing}
-    ret = nothing
-    walk(proj.frames) do subframe 
-        if subframe.name == name
-            ret = subframe
-        end
+    ret = findfirst(proj.frames) do subframe
+        subframe.name == name
     end
-    return ret
+    if isnothing(ret)
+        return nothing
+    end
+    return proj.frames[ret]
 end
 
 function CollectFrame(proj, name::String)
-    frames = Array{Frame}(undef, 0)
-    walk(proj.frames) do subframe
-        if subframe.name == name
-            push!(frames, subframe)
-        end
+    frames = findall(proj.frames) do subframe
+        subframe.name == name
     end
     return frames
 end
