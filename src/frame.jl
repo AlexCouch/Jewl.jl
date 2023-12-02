@@ -16,9 +16,15 @@ end
 """
 Recursively walk through the frame tree and apply the given function `f` to each frame encountered
 """
-function walk(f, frame)
+function walk(f, project, frame)
     f(frame)
-    _ = walk.(f, frame.subframes)
+    subframes = map(frame.subframes) do fidx
+        project.frames[fidx+1]
+    end
+    subframes = filter(subframes) do sub 
+        sub.name != frame.name
+    end
+    foreach(subframe -> walk(f, project, subframe), subframes)
 end
 
 

@@ -5,7 +5,7 @@ using PyPlot
 @testset "Load" begin
     proj = Jewl.Load("../data/bubble_sort.json")
     bubble_sort = Jewl.GetFrame(proj, "bubbleSort")
-    js = Jewl.CollectVariable(bubble_sort, "j")
+    js = Jewl.CollectVariable(proj, bubble_sort, "j")
     x, y = ([time for (time, j) in js], [j for (time, j) in js])
     plot(x, y)
 end

@@ -21,9 +21,22 @@ function GetFrame(proj::Project, name::String)::Union{Frame, Nothing}
     return proj.frames[ret]
 end
 
-function CollectFrame(proj, name::String)
-    frames = findall(proj.frames) do subframe
+function CollectFrame(proj, base, name::String)
+    frames = Array{Frame}(undef, 0)
+    walk(proj, base) do sub
+        if sub.name == name
+            push!(frames, sub)
+        end
+    end
+    return frames
+end
+
+function CollectFrame(proj, name::String)::Array{Frame}
+    fids = findall(proj.frames) do subframe
         subframe.name == name
+    end
+    frames = map(fids) do fidx
+        proj.frames[fidx]
     end
     return frames
 end

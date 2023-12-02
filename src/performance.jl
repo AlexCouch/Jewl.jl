@@ -3,14 +3,16 @@ import Flatten
 using PyPlot
 using DataStructures
 
-function FlattenFrame(data::Frame)
+function FlattenFrame(proj::Project, data::Frame)
     arr = Array{Tuple}(undef, 0)
-    use = Union{String, Float64}
-    ignore = Array{Frame}
+    use = Union{String, Int}
+    ignore = Union{Array{Int}, FrameData}
     frameFlat = Flatten.flatten(data, use, ignore)
     push!(arr, frameFlat)
-    for sub in data.subframes
-        arr = vcat(arr, FlattenFrame(sub))
+    walk(proj, data) do sub 
+        if sub.name != data.name
+            arr = vcat(arr, FlattenFrame(proj, sub))
+        end
     end
     return arr
 end
@@ -40,10 +42,10 @@ function GetMinMax(data)
     return argmin(abs, data), argmax(abs, data)
 end
 
-function Performance(data::Frame)
-    flat = FlattenFrame(data)
+function Performance(proj::Project, data::Frame)
+    flat = FlattenFrame(proj, data)
     df = DataFrame(flat)
-    rename!(df, [:uuid, :name, :start, :end, :duration])
+    rename!(df, [:location, :name, :start, :end, :duration])
     times = df[:, :duration]
     names = df[:, :name]
     times_names = Separate(zip(times, names))

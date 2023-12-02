@@ -31,10 +31,10 @@ Pair each found variable of name `varname` with the duration of it's frame
 
 See also [`Frame`](@ref), [`GetVariable`](@ref)
 """
-function CollectVariable(frame::Frame, varname::String)
+function CollectVariable(project::Project, frame::Frame, varname::String)
     vars = Array{Tuple{Float64, Any}}(undef, 0)
     # walk(frame -> vars = vcat(vars, [arg for arg in frame.args if arg[1] == varname]), data)
-    walk(frame) do subframe
+    walk(project, frame) do subframe
         var = GetVariable(subframe, varname)
         if !isnothing(var)
             push!(vars, (subframe.duration, var))
@@ -60,11 +60,11 @@ julia> data = Load("data/bubble_sort.json")
 julia> samples = Sample(data, "outer_loop", "inner_loop", "j")
 ```
 """
-function Sample(data::Frame, base::String, sample::String, varname::String)
-    base_frames = CollectFrame(data, base)
+function Sample(proj::Project, base::String, sample::String, varname::String)
+    base_frames = CollectFrame(proj, base)
     samples = Array{Array{Any}}(undef, 0)
     for base_frame in base_frames
-        sample_frames = CollectFrame(base_frame, sample)
+        sample_frames = CollectFrame(proj, base_frame, sample)
         sample_data = Array{Any}(undef, 0)
         for sample_frame in sample_frames
             var = GetVariable(sample_frame, varname)
