@@ -8,6 +8,7 @@ DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 Flatten = "4c728ea3-d9ee-5c9a-9642-b6f7d7dc04fa"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+MsgPack = "99f44e22-a591-53d1-9472-aa23ef4bd671"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
 
 [compat]
