@@ -1,8 +1,17 @@
 using JSON3
+using MsgPack
 
 struct Project
     header::Dict{String, Int}
     frames::Array{Frame}
+end
+
+MsgPack.msgpack_type(::Type{Project}) = MsgPack.StructType()
+MsgPack.msgpack_type(::Type{Frame}) = MsgPack.StructType()
+
+function LoadBinary(path::String)::Project
+    bytes = read(path)
+    return MsgPack.unpack(bytes, Project)
 end
 
 function Load(path::String)::Project
