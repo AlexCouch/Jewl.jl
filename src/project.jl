@@ -2,7 +2,7 @@ using JSON3
 using MsgPack
 
 struct Project
-    header::Dict{String, Int}
+    header::Dict{String, Array{Int}}
     frames::Array{Frame}
 end
 
