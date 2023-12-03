@@ -2,8 +2,8 @@ using JSON3
 using MsgPack
 
 struct Project
-    header::Dict{String, Array{Int}}
-    frames::Array{Frame}
+    Header::Dict{String, Array{Int}}
+    Frames::Array{Frame}
 end
 
 MsgPack.msgpack_type(::Type{Project}) = MsgPack.StructType()
@@ -21,19 +21,19 @@ function Load(path::String)::Project
 end
 
 function GetFrame(proj::Project, name::String)::Union{Frame, Nothing}
-    ret = findfirst(proj.frames) do subframe
-        subframe.name == name
+    ret = findfirst(proj.Frames) do subframe
+        subframe.Name == name
     end
     if isnothing(ret)
         return nothing
     end
-    return proj.frames[ret]
+    return proj.Frames[ret]
 end
 
 function CollectFrame(proj, base, name::String)
     frames = Array{Frame}(undef, 0)
     walk(proj, base) do sub
-        if sub.name == name
+        if sub.Name == name
             push!(frames, sub)
         end
     end

@@ -3,14 +3,14 @@ using JSON3
 const FrameData = Dict{String, Any}
 
 struct Frame 
-    location::String
-    name::String
-    start::Int
-    var"end"::Int
-    duration::Int
-    args::FrameData
-    subframes::Array{Int}
-    calls::Array{Int}
+    Location::String
+    Name::String
+    Start::Int
+    var"End"::Int
+    Duration::Int
+    Args::FrameData
+    Subframes::Array{Int}
+    Calls::Array{Int}
 end
 
 """
@@ -18,11 +18,11 @@ Recursively walk through the frame tree and apply the given function `f` to each
 """
 function walk(f, project, frame)
     f(frame)
-    subframes = map(frame.subframes) do fidx
-        project.frames[fidx+1]
+    subframes = map(frame.Subframes) do fidx
+        project.Frames[fidx+1]
     end
     subframes = filter(subframes) do sub 
-        sub.name != frame.name
+        sub.Name != frame.Name
     end
     foreach(subframe -> walk(f, project, subframe), subframes)
 end
