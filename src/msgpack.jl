@@ -1,6 +1,10 @@
+
+module MsgPackSerial
 using MsgPack
+import ..Jewl
 
-MsgPack.msgpack_type(::Type{Project}) = MsgPack.StructType()
-MsgPack.msgpack_type(::Type{Frame}) = MsgPack.StructType()
+MsgPack.msgpack_type(::Type{Jewl.Project}) = MsgPack.StructType()
+MsgPack.msgpack_type(::Type{Jewl.Frame}) = MsgPack.StructType()
 
-serializer() = MsgPack.unpack
+Jewl.serializer() = MsgPack.unpack
+end
