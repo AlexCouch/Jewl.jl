@@ -9,13 +9,17 @@ end
 MsgPack.msgpack_type(::Type{Project}) = MsgPack.StructType()
 MsgPack.msgpack_type(::Type{Frame}) = MsgPack.StructType()
 
-function LoadBinary(path::String)::Project
-    bytes = read(path)
+function getPath(proj_name::String)::String
+    return string(".jewl/", proj_name)
+end
+
+function LoadBinary(proj_name::String)::Project
+    bytes = read(getPath(proj_name))
     return MsgPack.unpack(bytes, Project)
 end
 
-function Load(path::String)::Project
-    json_str = read(path, String)
+function Load(proj_name::String)::Project
+    json_str = read(getPath(proj_name), String)
     proj = JSON3.read(json_str, Project)
     return proj
 end
