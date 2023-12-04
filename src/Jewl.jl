@@ -6,4 +6,6 @@ include("performance.jl")
 include("data.jl")
 include("msgpack.jl")
 
+export MsgPackSerial
+
 end
